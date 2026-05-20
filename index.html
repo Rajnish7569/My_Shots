@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Shots</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header>
+    <div class="logo">My <span>Shots</span></div>
+    <div class="header-right">
+
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input
+          type="text"
+          id="search-input"
+          class="search-input"
+          placeholder="Search by name or description…"
+          oninput="onSearch(this.value)"
+          autocomplete="off"
+        >
+        <button class="search-clear" id="search-clear" onclick="clearSearch()" title="Clear">✕</button>
+      </div>
+
+      <select class="sort-select" onchange="sortPhotos(this.value)">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="name">Name A–Z</option>
+      </select>
+
+      <button class="upload-btn" onclick="document.getElementById('file-input').click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        Upload
+      </button>
+      <input type="file" id="file-input" accept="image/*" multiple>
+    </div>
+  </header>
+
+  <!-- ── Stats bar ── -->
+  <div class="stats-bar">
+    <span><strong id="photo-count">0</strong> photos</span>
+    <span id="search-status"></span>
+  </div>
+
+  <!-- ── Gallery ── -->
+  <main>
+    <div id="gallery" class="pinterest-view"></div>
+
+    <div class="empty-state" id="empty-state">
+      <p>Click <strong>Upload</strong> to add your first photo.</p>
+    </div>
+
+    <div class="no-results" id="no-results" style="display:none">
+      <p>No results for "<span id="no-results-query"></span>". Try a different search.</p>
+    </div>
+  </main>
+
+  <!-- ── Lightbox ── -->
+  <div id="lightbox">
+    <button id="lb-close" onclick="closeLightbox()">✕</button>
+    <img id="lb-img" src="" alt="">
+    <div id="lb-info">
+      <div id="lb-name"></div>
+      <div id="lb-desc"></div>
+    </div>
+    <div id="lb-caption"></div>
+    <div id="lb-nav">
+      <button onclick="lbNav(-1)">← Prev</button>
+      <button onclick="lbNav(1)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ── Edit Modal ── -->
+  <div id="edit-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title">Edit Photo</h2>
+        <button class="modal-close" onclick="closeEditModal()">✕</button>
+      </div>
+      <div class="modal-thumb-wrap">
+        <img id="modal-thumb" src="" alt="">
+      </div>
+      <div class="modal-field">
+        <label for="modal-name">Name</label>
+        <input type="text" id="modal-name" placeholder="Enter a name…" autocomplete="off">
+      </div>
+      <div class="modal-field">
+        <label for="modal-desc">Description</label>
+        <textarea id="modal-desc" rows="3" placeholder="Add a description…"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-cancel" onclick="closeEditModal()">Cancel</button>
+        <button class="modal-save"   onclick="saveEdit()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
